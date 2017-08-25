@@ -7,6 +7,7 @@ let headers = {
   'content-type' : 'application/json; charset=utf-8'
 };    
 
+let fetchToken = undefined;
 
 let Fetch = {
   install: function (Vue, options) {
@@ -20,7 +21,14 @@ let Fetch = {
         //token 過期了
         if (Math.floor(Date.now() / 1000) >= loginInfo.exp) {
           return new Promise( (resolve, reject) => {
-            reNewToken(this.$store)
+            let fetchTokening; 
+            if(fetchToken) {
+              fetchTokening = fetchToken;
+            } else {
+              fetchTokening = reNewToken(this.$store);
+              fetchToken = fetchTokening;
+            }
+            fetchTokening
               .then((token)=>{
                 //retry
                 if(!methodOptions.headers) {
@@ -34,8 +42,10 @@ let Fetch = {
                   .request(methodOptions)
                   .then(res => resolve(res))
                   .catch(err => reject(err))
+                fetchToken = undefined;
               }).catch((err)=>{
-                 reject(err);
+                reject(err);
+                fetchToken = undefined;
               })
           });
         }
@@ -55,11 +65,15 @@ let Fetch = {
           .catch(err => {
             if (err.response.status === 403) {
               if ((err.response.data.code === 'token_not_found' 
-                || err.response.data.code === 'invalid_token')
-                && loginInfo.name
-                && loginInfo.password) {
-
-                reNewToken(this.$store)
+                || err.response.data.code === 'invalid_token')) {
+                let fetchTokening; 
+                if(fetchToken) {
+                  fetchTokening = fetchToken;
+                } else {
+                  fetchTokening = reNewToken(this.$store);
+                  fetchToken = fetchTokening;
+                }
+                fetchTokening
                   .then((token)=>{
                     //retry
                     methodOptions.headers.Authorization = token;
@@ -83,6 +97,10 @@ let Fetch = {
 let reNewToken = function($store) {
   let loginInfo = $store.state.login.info;
   return new Promise((resolve, reject) => {
+    if(!loginInfo.name || !loginInfo.password) {
+      reject('no info');
+      return;
+    }
     axios
       .request({
         method: 'post',
