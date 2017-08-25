@@ -14,14 +14,12 @@
 
 
 <script>
-import ajax from '@/utils/ajax';
-
 export default {
   name: 'login',
   methods: {
     onSubmit () {
       let that = this;
-      ajax.fetch({
+      that.$fetch({
         method: 'post',
         url: ' http://52.197.192.141:3443',
         data: {

@@ -4,14 +4,17 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import App from './App'
 import router from './router'
-import 'bootstrap/dist/css/bootstrap.css'
+import store from '@/stores/store'
+import fetch from '@/plugin/fetch'
 
+import 'bootstrap/dist/css/bootstrap.css'
 
 Vue.config.productionTip = false;
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+  store,
   router,
   template: '<App/>',
   components: { App }

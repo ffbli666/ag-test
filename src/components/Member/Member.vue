@@ -26,16 +26,7 @@
 
 
 <script>
-import ajax from '@/utils/ajax';
-const getMemberList = (token) => {
-  return ajax.fetch({
-    headers: {
-      Authorization: token
-    },
-    method: 'get',
-    url: 'http://52.197.192.141:3443/member',
-  })
-}
+
 export default {
   name: 'member',
   beforeCreate () {
@@ -44,7 +35,10 @@ export default {
       this.$router.push('/');
       return;
     }
-    getMemberList(token).then((response) => {
+    this.$fetch({
+      method: 'get',
+      url: 'http://52.197.192.141:3443/member',
+    }).then((response) => {
       this.members = response.data.data.reverse()
     });
   },
@@ -58,10 +52,7 @@ export default {
     onCreate() {
       let that = this;
       let token =  that.$store.state.login.token.token;
-      ajax.fetch({
-        headers: {
-          Authorization: token
-        },
+      that.$fetch({
         method: 'post',
         url: 'http://52.197.192.141:3443/member',
         data: {
@@ -69,9 +60,12 @@ export default {
         }
       }).then((response) => {
         //因為 api 沒吐回 ID , 只好重取一次, 有 ID 就能從前端直接放進資料
-        getMemberList(token).then((response) => {
-          that.members = response.data.data.reverse()
-        });        
+        that.$fetch({
+          method: 'get',
+          url: 'http://52.197.192.141:3443/member',
+        }).then((response) => {
+          this.members = response.data.data.reverse()
+        });       
         that.name = '';
       })       
     }

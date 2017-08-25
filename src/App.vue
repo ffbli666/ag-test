@@ -9,11 +9,9 @@
 
 <script>
 import Navbar from '@/components/Layout/Navbar'
-import store from '@/stores/store'
 
 export default {
   name: 'app',
-  store,
   components: {
     Navbar
   }
