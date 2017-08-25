@@ -18,7 +18,7 @@ npm run build
 npm run build --report
 ```
 
-##補充說明
+## 補充說明
 
 更新 token 機制，是用 vue plugin 實作一個 $fetch 涵數，該 $fetch 涵數包裝了自家商業邏輯(第三方的另用 axios 即可)，登入用的 Authorization 和 renew token 機制均在此。
 
