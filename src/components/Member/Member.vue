@@ -2,12 +2,12 @@
   <div class="container">
     <div class="create-member">
       <form class="form-inline" v-on:submit.prevent="onCreate">
-        <label>Create New Member</label>
         <input type="text" class="form-control" placeholder="Name" required v-model="name">
         <button class="btn btn-primary" type="submit">Create New User</button>
       </form>
     </div>
-    <table class="table table-striped"> 
+    <div v-show="members.length === 0">No data. You can create new member.</div>
+    <table v-show="members.length > 0" class="table table-striped"> 
       <thead>
         <tr>
           <th>ID</th>
@@ -27,9 +27,10 @@
 
 <script>
 import { MemberUrl } from '@/utils/api';
+
 export default {
   name: 'member',
-  beforeCreate () {
+  beforeCreate () {    
     let token =  this.$store.state.login.info.token;
     if (!token) {
       this.$router.push('/');
@@ -40,6 +41,8 @@ export default {
       url: MemberUrl,
     }).then((response) => {
       this.members = response.data.data.reverse()
+    }).catch((err)=>{
+      this.$swal({title: 'Permission denied', type: 'error'});
     });
   },
   data () {
@@ -67,7 +70,9 @@ export default {
           this.members = response.data.data.reverse()
         });       
         that.name = '';
-      })       
+      }).catch((err)=>{
+        this.$swal({title: 'Permission denied', type: 'error'});
+      });     
     }
   }
 }

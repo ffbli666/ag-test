@@ -7,7 +7,7 @@
       <label class="sr-only">Password</label>
       <input type="password" class="form-control" placeholder="Password" required v-model="password">
       <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-      <div class="error" v-show="error">Name or Password incorrectd!!</div>
+      <div class="error" v-show="error">Name or Password incorrect!!</div>
     </form>
   </div>
 </template>

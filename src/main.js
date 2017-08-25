@@ -6,9 +6,10 @@ import App from './App'
 import router from './router'
 import store from '@/stores/store'
 import fetch from '@/plugin/fetch'
+import VueSweetAlert from 'vue-sweetalert'
 
 import 'bootstrap/dist/css/bootstrap.css'
-
+Vue.use(VueSweetAlert);
 Vue.config.productionTip = false;
 
 /* eslint-disable no-new */

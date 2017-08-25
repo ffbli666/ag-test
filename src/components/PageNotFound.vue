@@ -1,6 +1,8 @@
 <template>
   <div class="container">
-    Page Not Found!
+  	<div class="information">
+    	Page Not Found!
+    </div>
   </div>
 </template>
 
@@ -15,5 +17,8 @@
   .container {
     text-align: center;
     font-size: 36px;
+  }
+  .information {
+  	padding-top: 100px;
   }
 </style>
