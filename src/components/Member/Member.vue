@@ -30,7 +30,7 @@
 export default {
   name: 'member',
   beforeCreate () {
-    let token =  this.$store.state.login.token.token;
+    let token =  this.$store.state.login.info.token;
     if (!token) {
       this.$router.push('/');
       return;
@@ -51,7 +51,7 @@ export default {
   methods: {
     onCreate() {
       let that = this;
-      let token =  that.$store.state.login.token.token;
+      let token =  that.$store.state.login.info.token;
       that.$fetch({
         method: 'post',
         url: 'http://52.197.192.141:3443/member',

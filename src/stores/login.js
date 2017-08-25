@@ -1,13 +1,23 @@
+const getInitState = function() {
+  return {
+    name: '',
+    token: '',
+    password: '',
+  }
+}
+
 export default {
   state: {
-    token: { 
-      name: '',
-      token: '', 
-    }
+    info: getInitState()
   },
   mutations: {
-    login (state, data) {
-      state.token = data;
+    login (state, data) {      
+      data.password = btoa(data.password);
+      state.info = data;
     }
   }
+}
+
+export {
+  getInitState
 }
