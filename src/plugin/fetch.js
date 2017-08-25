@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import axios from 'axios'
 import { getInitState } from '@/stores/login'
+import { LoginUrl } from '@/utils/api';
 
 let headers = {
   'content-type' : 'application/json; charset=utf-8'
@@ -85,7 +86,7 @@ let reNewToken = function($store) {
     axios
       .request({
         method: 'post',
-        url: ' http://52.197.192.141:3443',
+        url: LoginUrl,
         data: {
           name: loginInfo.name,
           pwd: atob(loginInfo.password),

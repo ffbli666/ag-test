@@ -26,7 +26,7 @@
 
 
 <script>
-
+import { MemberUrl } from '@/utils/api';
 export default {
   name: 'member',
   beforeCreate () {
@@ -37,7 +37,7 @@ export default {
     }
     this.$fetch({
       method: 'get',
-      url: 'http://52.197.192.141:3443/member',
+      url: MemberUrl,
     }).then((response) => {
       this.members = response.data.data.reverse()
     });
@@ -54,7 +54,7 @@ export default {
       let token =  that.$store.state.login.info.token;
       that.$fetch({
         method: 'post',
-        url: 'http://52.197.192.141:3443/member',
+        url: MemberUrl,
         data: {
           name: that.name
         }
@@ -62,7 +62,7 @@ export default {
         //因為 api 沒吐回 ID , 只好重取一次, 有 ID 就能從前端直接放進資料
         that.$fetch({
           method: 'get',
-          url: 'http://52.197.192.141:3443/member',
+          url: MemberUrl,
         }).then((response) => {
           this.members = response.data.data.reverse()
         });       

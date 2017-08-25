@@ -15,6 +15,7 @@
 
 <script>
 import { getInitState } from '@/stores/login';
+import { LoginUrl } from '@/utils/api';
 
 export default {
   name: 'login',
@@ -23,7 +24,7 @@ export default {
       let that = this;
       that.$fetch({
         method: 'post',
-        url: ' http://52.197.192.141:3443',
+        url: LoginUrl,
         data: {
           name: this.name,
           pwd: this.password,
