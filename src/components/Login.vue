@@ -14,6 +14,8 @@
 
 
 <script>
+import { getInitState } from '@/stores/login';
+
 export default {
   name: 'login',
   methods: {
@@ -27,13 +29,16 @@ export default {
           pwd: this.password,
         }
       }).then((response) => {
-        that.$store.commit('login', response.data.token);
+        that.$store.commit('login', {
+          ...response.data.token,
+          password: this.password
+        });
         that.error = false;
         that.name = '';
         that.password = '';
         that.$router.push('/member');
       }).catch((err) => {
-        that.$store.commit('login', {name:'', token: ''});
+        that.$store.commit('login', getInitState());
         that.error = true;
       })
     }

@@ -23,12 +23,13 @@
 </template>
 
 <script>
+import { getInitState } from '@/stores/login';
 export default {
   name: 'navbar',
   methods: {
     onLogout () {
       this.$router.push('/');
-      this.$store.commit('login', {name:'', token: ''});
+      this.$store.commit('login', getInitState());
     },
     onToggle () {
       this.toggle = !this.toggle;
@@ -36,7 +37,7 @@ export default {
   },
   computed: {
     isLogin () {
-      return this.$store.state.login.token.token !== '';
+      return this.$store.state.login.info.token !== '';
     }
   },
   data () {
